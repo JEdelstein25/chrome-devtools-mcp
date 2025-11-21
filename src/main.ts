@@ -74,6 +74,7 @@ async function getContext(): Promise<McpContext> {
           headless: args.headless,
           executablePath: args.executablePath,
           channel: args.channel as Channel,
+          userDataDir: args.userDataDir,
           isolated: args.isolated,
           logFile,
           viewport: args.viewport,

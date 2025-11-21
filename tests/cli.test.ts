@@ -198,4 +198,23 @@ describe('cli args parsing', () => {
       categoryEmulation: false,
     });
   });
+
+  it('parses userDataDir', async () => {
+    const args = parseArguments('1.0.0', [
+      'node',
+      'main.js',
+      '--userDataDir',
+      '/tmp/custom-profile',
+    ]);
+    assert.deepStrictEqual(args, {
+      ...defaultArgs,
+      _: [],
+      headless: false,
+      isolated: false,
+      $0: 'npx chrome-devtools-mcp@latest',
+      channel: 'stable',
+      'user-data-dir': '/tmp/custom-profile',
+      userDataDir: '/tmp/custom-profile',
+    });
+  });
 });

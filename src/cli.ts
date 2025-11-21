@@ -91,6 +91,12 @@ export const cliOptions = {
       'If specified, creates a temporary user-data-dir that is automatically cleaned up after the browser is closed.',
     default: false,
   },
+  userDataDir: {
+    type: 'string',
+    description:
+      'Path to a custom user data directory (profile). Cannot be used with --isolated.',
+    conflicts: ['browserUrl', 'wsEndpoint'],
+  },
   channel: {
     type: 'string',
     description:
@@ -167,6 +173,11 @@ export function parseArguments(version: string, argv = process.argv) {
     .scriptName('npx chrome-devtools-mcp@latest')
     .options(cliOptions)
     .check(args => {
+      if (args.userDataDir && args.isolated) {
+        throw new Error(
+          'Arguments userDataDir and isolated are mutually exclusive',
+        );
+      }
       // We can't set default in the options else
       // Yargs will complain
       if (
